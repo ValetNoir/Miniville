@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Miniville.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Miniville
+namespace Miniville.BuildingStuff
 {
     internal class EffectsGenerator
     {
@@ -13,7 +14,7 @@ namespace Miniville
 
         public Func<Player, Player, bool> GenerateMoney(int amount)
         {
-            return (Player receiver, Player giver = null) =>
+            return (receiver, _giver) =>
             {
                 receiver.Money += amount;
 
@@ -23,7 +24,7 @@ namespace Miniville
 
         public Func<Player, Player, bool> StealMoney(int amount)
         {
-            return (Player receiver, Player giver) =>
+            return (receiver, giver) =>
             {
                 if (giver.Money < amount)
                 {
@@ -38,7 +39,7 @@ namespace Miniville
 
         public Func<Player, Player, bool> GenerateMoneyWithType(int amount, CardType type)
         {
-            return (Player receiver, Player giver = null) =>
+            return (receiver, _giver) =>
             {
                 int count = receiver.Cards.Where(card => card.Type == type).Count();
                 receiver.Money += amount * count;
@@ -46,19 +47,5 @@ namespace Miniville
                 return true;
             };
         }
-    }
-
-    internal class Buildings
-    {
-
-        public readonly Card WHEAT_FIELD = new Card(
-            new int[] { 1 },
-            CardColor.BLUE,
-            CardType.FIELD,
-            "Wheat Field",
-            "Get 1 coin from the bank. Everyone can use this card on anyone's turn.",
-            1,
-            EffectsGenerator.Instance.GenerateMoney(1)
-        );
     }
 }

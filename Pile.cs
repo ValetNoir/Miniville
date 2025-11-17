@@ -1,3 +1,5 @@
+using Miniville.BuildingStuff;
+
 namespace Miniville
 {
 	class Pile
