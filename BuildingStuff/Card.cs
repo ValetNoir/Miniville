@@ -15,9 +15,9 @@ namespace Miniville.BuildingStuff
         public readonly string Name;
         public readonly string Desc;
         public readonly int Price;
-        public readonly Func<Player, Player, bool> Effect; // Player receiver, Player giver = null
+        public readonly Func<Player[], int, int, bool> Effect; // Player receiver, Player giver = null
 
-        public Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, Func<Player, Player, bool> effect)
+        public Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, Func<Player[], int, int, bool> effect)
         {
             ActiveNumbers = activeNumbers;
             Color = color;
