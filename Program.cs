@@ -7,20 +7,27 @@ namespace Miniville
     
     class Pile
     {
-        private Card[] Cards = [];
+        private List<Card> Cards = [];
         public Pile() {}
 
         public void Stack(Card newCardReference)
         {
-            Cards.Append(newCardReference);
+            Cards.Add(newCardReference);
         }
         
         public Card Top()
         {
-            return Cards[Cards.Length];
+            return Cards[Cards.Count];
         }
         
-        public Card[] Loop()
+        public Card Pickup()
+        {
+            Card pickedUpCardReference = Cards[Cards.Count];
+            Cards.RemoveAt(Cards.Count);
+            return pickedUpCardReference;
+        }
+        
+        public List<Card> Loop()
         {
             return Cards;
         }
