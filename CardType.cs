@@ -8,12 +8,12 @@ namespace Miniville
 {
     enum CardType
     {
-        field,      //wheat logo
-        barn,       // cow logo
-        shop,       //cubic house logo
-        coffee,     //coffee logo
-        worksite,   //gear logo
-        factory,    //seems like factory logo
-        bomb        //le logo du marché
+        FIELD,      //WHEAT LOGO
+        BARN,       // COW LOGO
+        SHOP,       //CUBIC HOUSE LOGO
+        COFFEE,     //COFFEE LOGO
+        WORKSITE,   //GEAR LOGO
+        FACTORY,    //SEEMS LIKE FACTORY LOGO
+        BOMB,       //LE LOGO DU MARCHÉ
     }
 }

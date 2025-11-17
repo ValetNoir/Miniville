@@ -8,8 +8,8 @@ namespace Miniville
 {
     enum CardColor
     {
-        BLEU,
-        VERT,
-        ROUGE
+        BLUE,
+        GREEN,
+        RED,
     }
 }
