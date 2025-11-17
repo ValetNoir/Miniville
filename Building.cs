@@ -8,17 +8,17 @@ namespace Miniville
 {
     public enum Building
     {
-        Ferme,
-        Champs_de_ble,
-        Boulangerie,
-        Cafe,
-        Superette,
-        Foret,
-        Fromagerie,
-        Frabrique_de_meuble,
+        Farm,
+        Wheat_fields,
+        Bakery,
+        Coffee_shop,
+        Convenience_store,
+        Forest,
+        Cheese_shop,
+        Furniture_factory,
         Mine,
         Restaurant,
-        Verger,
-        Marche_de_fruits_et_legumes
+        Orchard,
+        Fruit_and_vegetable_market
     }
 }
