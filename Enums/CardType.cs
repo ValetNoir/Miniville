@@ -13,6 +13,7 @@ namespace Miniville.Enums
         SHOP,       //CUBIC HOUSE LOGO
         CUP,        //COFFEE LOGO
         GEAR,       //GEAR LOGO
+        TOWER,      //TOWER LOGO
         FACTORY,    //SEEMS LIKE FACTORY LOGO
         BOMB,       //LE LOGO DU MARCHÉ
     }
