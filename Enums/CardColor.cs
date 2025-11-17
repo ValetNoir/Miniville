@@ -11,5 +11,7 @@ namespace Miniville.Enums
         BLUE,
         GREEN,
         RED,
+        PURPLE,
+        YELLOW,
     }
 }
