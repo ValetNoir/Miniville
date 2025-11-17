@@ -2,7 +2,10 @@
 
 namespace Miniville
 {
-    
+    static class CardsCollection
+	{
+		static readonly Card FERME = new();
+	}
     class Card {}
     
     class Pile
