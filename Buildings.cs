@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Miniville
 {
-    internal class Buildings
+    internal class EffectsGenerator
     {
-        
-        private Func<Player, Player, bool> generateMoney(int amount)
+        public static readonly EffectsGenerator Instance = new EffectsGenerator();
+        public EffectsGenerator() { }
+
+        public Func<Player, Player, bool> GenerateMoney(int amount)
         {
             return (Player receiver, Player giver = null) =>
             {
@@ -19,7 +21,7 @@ namespace Miniville
             };
         }
 
-        private Func<Player, Player, bool> stealMoney(int amount)
+        public Func<Player, Player, bool> StealMoney(int amount)
         {
             return (Player receiver, Player giver) =>
             {
@@ -34,7 +36,7 @@ namespace Miniville
             };
         }
 
-        private Func<Player, Player, bool> generateMoneyWithType(int amount, CardType type)
+        public Func<Player, Player, bool> GenerateMoneyWithType(int amount, CardType type)
         {
             return (Player receiver, Player giver = null) =>
             {
@@ -44,15 +46,19 @@ namespace Miniville
                 return true;
             };
         }
+    }
+
+    internal class Buildings
+    {
 
         public readonly Card WHEAT_FIELD = new Card(
             new int[] { 1 },
             CardColor.BLUE,
-            CardType.RAW_MATERIAL,
+            CardType.FIELD,
             "Wheat Field",
             "Get 1 coin from the bank. Everyone can use this card on anyone's turn.",
             1,
-            generateMoney(1)
+            EffectsGenerator.Instance.GenerateMoney(1)
         );
     }
 }

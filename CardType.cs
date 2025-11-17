@@ -9,7 +9,7 @@ namespace Miniville
     enum CardType
     {
         FIELD,      //WHEAT LOGO
-        BARN,       // COW LOGO
+        BARN,       //COW LOGO
         SHOP,       //CUBIC HOUSE LOGO
         COFFEE,     //COFFEE LOGO
         WORKSITE,   //GEAR LOGO
