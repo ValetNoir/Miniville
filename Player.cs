@@ -13,8 +13,8 @@ namespace Miniville
 
         public Player() 
         {
-            cards.Add(new Card([1],cards.Blue, Buildings.Wheat_fields));
-            cards.Add(new Card([1,2] card.Green, Buildings.Bakery))
+            cards.Add(new Card([1], CardColor.BLUE, CardType.field, "Wheat Fields", "Ajouter 1 pièce à la banque", 1, 1, Buildings.Wheat_fields));
+            cards.Add(new Card([1, 2], CardColor.GREEN, CardType.shop, "Bakery", "Ajouter 1 pièce à la banque", 1, 1, Buildings.Bakery));
         }
 
         public void BuyCard(Card building) //Check if the player have enough money and add the card to the list if yes
