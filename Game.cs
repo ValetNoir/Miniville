@@ -1,0 +1,7 @@
+namespace Miniville
+{
+	class Game
+	{
+		
+	}
+}
