@@ -26,7 +26,7 @@ namespace Miniville
 
 		public int RollDices(int dicesNumber)
 		{
-			return rand.Next(dicesNumber);
-		}
+			return rand.Next(dicesNumber); // ça marche pas comme ça + il faut avoir une classe dé séparée d'après l'énoncé 
+        }
 	}
 }
