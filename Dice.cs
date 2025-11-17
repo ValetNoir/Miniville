@@ -8,12 +8,7 @@ namespace Miniville
 {
     public class Dice
     {
-        private Random rdm;
-
-        public Dice()
-        {
-            rdm = new Random();
-        }
+        private Random rdm = new Random();
 
         public int Roll()
         {
