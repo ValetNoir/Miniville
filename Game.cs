@@ -17,7 +17,7 @@ namespace Miniville
 				//Check if Player B have Blue or Red Card
 				//Check if Player A have Blue or Green Card
 				//Player A can buy a card
-				if (!Players[0].HasWon() || !Players[1].HasWon()) break;
+				if (Players[0].HasWon() || Players[1].HasWon()) break;
                 //Check if Player A have Blue or Red Card
                 //Check if Player B have Blue or Green Card
                 //Player B can buy a card
