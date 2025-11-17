@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Miniville
 {
-    class Card
+    internal class Card
     {
         public readonly int[] ActiveNumbers;
         public readonly CardColor Color;
@@ -14,8 +14,9 @@ namespace Miniville
         public readonly string Name;
         public readonly string Desc;
         public readonly int Price;
+        public readonly Func<Player, Player, bool> Effect; // Player receiver, Player giver = null
 
-        Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, int gain, Building gainBuildingType=null)
+        Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, Func<Player, Player, bool> effect)
         {
             ActiveNumbers = activeNumbers;
             Color = color;
@@ -23,11 +24,7 @@ namespace Miniville
             Name = name;
             Desc = desc;
             Price = price;
-         }
-
-        public void Effect(Player source=null, Player target)
-        {
-            //magie noire gaspard (ça rime)
+            Effect = effect;
         }
     }
 }

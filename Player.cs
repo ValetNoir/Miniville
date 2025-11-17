@@ -8,30 +8,30 @@ namespace Miniville
 {
     internal class Player
     {
-        private List<Card> cards = new List<Card>();
-        int money = 0;
+        public List<Card> Cards = new List<Card>();
+        public int Money = 0;
 
         public Player() 
         {
-            cards.Add(new Card([1], CardColor.BLUE, CardType.field, "Wheat Fields", "Ajouter 1 pièce à la banque", 1, 1, Buildings.Wheat_fields));
-            cards.Add(new Card([1, 2], CardColor.GREEN, CardType.shop, "Bakery", "Ajouter 1 pièce à la banque", 1, 1, Buildings.Bakery));
+            Cards.Add(Buildings.WHEAT_FIELD);
+            Cards.Add(Buildings.BAKERY);
         }
 
         public void BuyCard(Card building) //Check if the player have enough money and add the card to the list if yes
         {
-            if (this.money >= building.Price)
+            if (this.Money >= building.Price)
             {
-                this.money -= building.Price;
-                this.cards.Add(building);
+                this.Money -= building.Price;
+                this.Cards.Add(building);
             }
         }
         public bool HasBuilding(Card building) //Return if the player have the building or not
         {
-            return cards.Contains(building) ? true : false;
+            return Cards.Contains(building) ? true : false;
         }
         public bool HasWon() //Return if the player has 20 coins to win or not
         {
-            return this.money >= 20 ? true : false;
+            return this.Money >= 20 ? true : false;
         }
     }
 }
