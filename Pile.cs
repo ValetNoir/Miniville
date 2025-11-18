@@ -11,19 +11,24 @@ namespace Miniville
 		{
 			Cards.Add(newCardReference);
 		}
-		    
+
+		public bool IsEmpty()
+		{
+			return Cards.Count == 0;
+		}
+
 		public Card Top()
 		{
 			return Cards[Cards.Count];
 		}
-		    
+
 		public Card Pickup()
 		{
 			Card pickedUpCardReference = Cards[Cards.Count];
 			Cards.RemoveAt(Cards.Count);
 			return pickedUpCardReference;
 		}
-		    
+
 		public List<Card> Loop()
 		{
 			return Cards;
