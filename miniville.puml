@@ -1,0 +1,74 @@
+@startuml Miniville
+skinparam classAttributeIconSize 0
+
+enum Type{
+  BLEU
+  VERT
+  ROUGE
+  VIOLET
+  MONUMENT
+}
+
+class Card {
+  + ActiveNumbers {readonly} : int[]
+  + Type {readonly} : type
+  + Price {readonly} : int 
+  + Name {readonly} : string
+  + Description {readonly} : string
+  - action : Func<Game, int, void>
+  + Act(gameState : Game, ownerPlayerIndex : int) : void
+}
+
+static class Globals {
+  + Cards {const} : Dictionnary<Building, Card>
+}
+
+enum Building {
+  CHAMPS_DE_BLE
+  FERME
+  BOULANGERIE
+  CAFE
+  SUPERETTE
+  FORET
+  STADE
+  CENTRE_D_AFFAIRES
+  CHAINE_DE_TELEVISION
+  FROMAGERIE
+  FABRIQUE_DE_MEUBLES
+  MINE
+  RESTAURANT
+  VERGER
+  MARCHE_DE_FRUITS_ET_LEGUMES
+  GARE
+  CENTRE_COMMERCIAL
+  TOUR_RADIO
+  PARC_D_ATTRACTIONS
+}
+
+class Game {
+  - random : Random
+  + Players : Player[]
+  + CurrentTurnPlayerIndex {readonly} : int
+  + BuildingsAmountLeft : Dictionnary<Building, int>
+  + PlayTurn() : void
+  + RollDices(dicesNumber : int) : int
+}
+
+class Player {
+  + Buildings : List<Building>
+  + Money : int
+  + GetTypeAmount(type : Type) : void
+  + BuyBuilding(building : Building) : void
+  + HasBuilding(building : Building) : bool
+  + HasWon() : bool
+}
+
+Type --o Card
+Card --* Globals
+Building --o Globals
+Player -.> Globals
+Game -.> Globals
+Building -o Player
+Building -o Game
+Player "1" --* "2..4" Game
+@enduml
