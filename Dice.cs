@@ -12,9 +12,19 @@ namespace Miniville
 
         public int Roll(bool multiDice = false)
         {
-            int result = rdm.Next(7);
-            if (multiDice) { result += rdm.Next(7); }
-            return result;
+            int resultD1 = rdm.Next(7);
+            if (multiDice)
+            {
+                int resultD2 = rdm.Next(7);
+                int total = resultD1 + resultD2;
+                Console.WriteLine("Dices result : {0}, {1}  Total : {2}", resultD1, resultD2, total);
+                return total;
+            }
+            else
+            {
+                Console.WriteLine($"Dice result : {resultD1}");
+                return resultD1;
+            }
         }
     }
 }
