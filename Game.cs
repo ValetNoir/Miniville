@@ -48,18 +48,17 @@ namespace Miniville
 				int diceResult = dice.Roll(); // logic to choose to play with 1 or 2 dices
 				Console.WriteLine($"{playingPlayer} rolled a {diceResult} !");
 
-				foreach (Card activatedCard in playingPlayer.Cards)
+				//Check if PlayingPlayer have Blue or Red Card
+				//Check if OthersPlayers have Blue or Green Card
+				foreach (Player loopPlayer in Players)
 				{
-					activatedCard.Effect(Players, playingIndex, diceResult);
+					foreach (Card activatedCard in loopPlayer.Cards)
+					{
+						activatedCard.Effect(Players, playingIndex, diceResult);
+					}
 				}
 
 				
-				//Check if PlayingPlayer have Blue or Red Card
-				
-				Console.WriteLine($"{playingPlayer} gagne {diceResult}$ ! (test)"); // in english please 🤓☝
-                playingPlayer.Money += diceResult;
-				
-				//Check if OthersPlayers have Blue or Green Card
 				
 				//PlayingPlayer can buy a card
 
