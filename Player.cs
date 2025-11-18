@@ -1,4 +1,5 @@
 ﻿using Miniville.BuildingStuff;
+using Miniville.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,14 @@ namespace Miniville
     {
         public List<Card> Cards = new List<Card>();
         public int Money = 0;
+        private readonly string Name;
+        private readonly PlayerType Type;
 
-        public Player() 
+
+        public Player(PlayerType playerType = PlayerType.HUMAN, string name = "machin")
         {
+            Name = name;
+            Type = playerType;
             Cards.Add(Buildings.WHEAT_FIELD);
             Cards.Add(Buildings.BAKERY);
         }
@@ -34,5 +40,10 @@ namespace Miniville
         {
             return this.Money >= 20 ? true : false;
         }
+
+		public override string ToString()
+		{
+			return Name;
+		}
     }
 }
