@@ -25,14 +25,13 @@ namespace Miniville
 				Players.Append(new(PlayerType.BOT, actualName));
 			}
 
-			// play and won
-			int winerIndex = Loop();
-			End(winerIndex);
+			// play
+			Loop();
 		}
 
-		public int Loop()
+		public void Loop()
 		{
-			while (!Players[0].HasWon() || !Players[1].HasWon())
+			while (!Ended())
 			{
 				// get the playing player and the others
 				turns++;
@@ -51,13 +50,12 @@ namespace Miniville
 				
 				//Check if OthersPlayers have Blue or Green Card
 				
-				//Player A can buy a card
-				if (Players[0].HasWon() || Players[1].HasWon()) break;
-				//Check if Player A have Blue or Red Card
-				//Check if Player B have Blue or Green Card
-				//Player B can buy a card
+				//PlayingPlayer can buy a card
 			}
+		}
 
+		public int? GetWinerIndex()
+		{
 			// get winer's index
 			for (int i = 0; i < Players.Length; i++)
 			{
@@ -66,12 +64,18 @@ namespace Miniville
 					return i;
 				}
 			}
-			throw new Exception("out of loop without a winer");
+			return null;
 		}
 
-		public void End(int winerIndex)
+		public bool Ended()
 		{
-			Console.WriteLine($"{Players[winerIndex]} a gagné ! GG");
+			// if winer
+			int? winerIndex = GetWinerIndex();
+			if (winerIndex == null) return false;
+
+			// win
+			Console.WriteLine($"{Players[(int)winerIndex]} a gagné ! GG");
+			return true;
 		}
 	}
 }
