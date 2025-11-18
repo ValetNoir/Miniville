@@ -10,9 +10,10 @@ namespace Miniville
     {
         private Random rdm = new Random();
 
-        public int Roll()
+        public int Roll(bool multiDice = false)
         {
             int result = rdm.Next(7);
+            if (multiDice) { result += rdm.Next(7); }
             return result;
         }
     }

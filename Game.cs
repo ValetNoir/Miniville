@@ -8,12 +8,13 @@ namespace Miniville
 		public Player[] Players = new Player[2];
 		public readonly int CurrentTurnPlayerIndex;
 		public Dictionary<Card, int> BuildingsAmountLeft = new Dictionary<Card, int>();
+		private Dice dice = new Dice();
 
 		public void PlayTurn()
 		{
 			while (!Players[0].HasWon() || !Players[1].HasWon())
 			{
-				int diceResult = RollDices(7);
+				int diceResult = dice.Roll();
 				//Check if Player B have Blue or Red Card
 				//Check if Player A have Blue or Green Card
 				//Player A can buy a card
