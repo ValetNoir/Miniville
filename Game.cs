@@ -1,5 +1,6 @@
 using Miniville.BuildingStuff;
 using Miniville.Enums;
+using System.Runtime.CompilerServices;
 
 namespace Miniville
 {
@@ -44,22 +45,65 @@ namespace Miniville
 				Player playingPlayer = Players[playingIndex];
 				IEnumerable<Player> otherPlayers = Players.Where((val, idx) => idx != playingIndex);
 
-				// roooool the dice yea
-				int diceResult = dice.Roll(); // logic to choose to play with 1 or 2 dices
-				Console.WriteLine($"{playingPlayer} rolled a {diceResult} !");
+                // roooool the dice yea
+                // logic to choose to play with 1 or 2 dices -> argument true for 2 dices
+                var diceResult = dice.Roll();
+				Console.WriteLine($"{playingPlayer} rolled a {diceResult.total} !");
 
-				//Check if PlayingPlayer have Blue or Red Card
-				//Check if OthersPlayers have Blue or Green Card
-				foreach (Player loopPlayer in Players)
-				{
-					foreach (Card activatedCard in loopPlayer.Cards)
+                //Check if PlayingPlayer have Blue or Red Card & activate card
+                foreach (Card card in playingPlayer.Cards)
+                {
+                    if (card.Color == CardColor.BLUE || card.Color == CardColor.RED)
 					{
-						activatedCard.Effect(Players, playingIndex, diceResult);
-					}
-				}
+                        if (card.ActiveNumbers.Length > 1) // double active number
+                        {
+							if (card.ActiveNumbers.Contains(diceResult.faces[0]))	// dice 1
+							{
+                                card.Effect(Players, playingIndex, playingIndex);
+                            }
+							if (diceResult.faces.Length > 1 && card.ActiveNumbers.Contains(diceResult.faces[1]))	// dice 2 (if it exists)
+							{
+                                card.Effect(Players, playingIndex, playingIndex);
+                            }
+						}
+						else if (card.ActiveNumbers.Contains(diceResult.total)) // single active number
+                        {
+							card.Effect(Players, playingIndex, playingIndex);
+						}
+                    }
+                }
 
-				
-				
+                //Check if OthersPlayers have Blue or Green Card & activate card
+                int ownerIndex = 0;
+                foreach (Player player in Players)
+				{
+					if (player != playingPlayer)	// exclude playing player
+					{
+						foreach (Card card in player.Cards)
+						{
+                            if (card.Color == CardColor.BLUE || card.Color == CardColor.GREEN)
+                            {
+                                if (card.ActiveNumbers.Length > 1) // double active number
+                                {
+                                    if (card.ActiveNumbers.Contains(diceResult.faces[0]))   // dice 1
+                                    {
+                                        card.Effect(Players, ownerIndex, playingIndex);
+                                    }
+                                    if (diceResult.faces.Length > 1 && card.ActiveNumbers.Contains(diceResult.faces[1]))    // dice 2 (if it exists)
+                                    {
+                                        card.Effect(Players, ownerIndex, playingIndex);
+                                    }
+                                }
+                                else if (card.ActiveNumbers.Contains(diceResult.total)) // single active number
+                                {
+                                    card.Effect(Players, ownerIndex, playingIndex);
+                                }
+                            }
+                        }
+                    }
+					ownerIndex++;
+				}
+								
 				//PlayingPlayer can buy a card
 
 
