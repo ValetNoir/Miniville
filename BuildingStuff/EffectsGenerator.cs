@@ -10,8 +10,8 @@ namespace Miniville.BuildingStuff
     internal class EffectsGenerator
     {
         public static readonly EffectsGenerator Instance = new EffectsGenerator();
-        public EffectsGenerator() { }
 
+        #region blue/red/green cards effects 
         public Action<Player[], int, int> GenerateMoney(int amount)
         {
             return (players, ownerIndex, currentPlayerIndex) =>
@@ -51,7 +51,9 @@ namespace Miniville.BuildingStuff
                 Console.WriteLine($"Player {ownerIndex} steals {amount} coins from Player {currentPlayerIndex}.");
             };
         }
+        #endregion
 
+        #region purple cards effects
         public Action<Player[], int, int> StealMoneyFromAll(int amount)
         {
             return (players, ownerIndex, currentPlayerIndex) =>
@@ -248,6 +250,6 @@ namespace Miniville.BuildingStuff
                 owner.Cards.Add(chosenPlayerBuilding);
             };
         }
-
+        #endregion
     }
 }
