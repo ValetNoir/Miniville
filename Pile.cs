@@ -4,7 +4,7 @@ namespace Miniville
 {
 	class Pile
 	{
-		private List<Card> Cards = [];
+		public List<Card> Cards = [];
 		public Pile() {}
 
 		public void Stack(Card newCardReference)
