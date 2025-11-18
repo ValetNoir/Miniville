@@ -167,8 +167,8 @@ namespace Miniville.BuildingStuff
                 Console.WriteLine("Proceeding with trade...");
 
                 Player chosenPlayer = null;
-                bool isChoosing = true;
-                while (isChoosing)
+                bool isChoosingPlayer = true;
+                while (isChoosingPlayer)
                 {
                     Console.WriteLine("Choose a player to trade with:");
                     for (int i = 0; i < players.Length; i++)
@@ -186,7 +186,7 @@ namespace Miniville.BuildingStuff
                         {
                             chosenPlayer = players[chosenIndex];
                             Console.WriteLine($"You have chosen Player {chosenIndex}.");
-                            isChoosing = false;
+                            isChoosingPlayer = false;
                         }
                         else
                             Console.WriteLine("Invalid player index. Please choose a player that is not yourself.");
@@ -195,7 +195,7 @@ namespace Miniville.BuildingStuff
                         Console.WriteLine("Invalid input. Please enter a valid player number.");
                 }
 
-                Card chosenPlayerBuildingToTrade = null;
+                Card chosenPlayerBuilding = null;
                 bool isChoosingChosenPlayerBuilding = true;
                 while (isChoosingChosenPlayerBuilding)
                 {
@@ -210,15 +210,15 @@ namespace Miniville.BuildingStuff
                     var input = Console.ReadLine();
                     if (int.TryParse(input, out int buildingIndex) && buildingIndex >= 0 && buildingIndex < chosenPlayer.Cards.Count)
                     {
-                        chosenPlayerBuildingToTrade = chosenPlayer.Cards[buildingIndex];
-                        Console.WriteLine($"You have chosen to receive their {chosenPlayerBuildingToTrade.Name}.");
+                        chosenPlayerBuilding = chosenPlayer.Cards[buildingIndex];
+                        Console.WriteLine($"You have chosen to receive their {chosenPlayerBuilding.Name}.");
                         isChoosingChosenPlayerBuilding = false;
                     }
                     else
                         Console.WriteLine("Invalid input. Please enter a valid building number.");
                 }
 
-                Card ownerBuildingToTrade = null;
+                Card ownerBuilding = null;
                 bool isChoosingOwnerBuilding = true;
                 while (isChoosingOwnerBuilding)
                 {
@@ -233,19 +233,19 @@ namespace Miniville.BuildingStuff
                     var input = Console.ReadLine();
                     if (int.TryParse(input, out int buildingIndex) && buildingIndex >= 0 && buildingIndex < owner.Cards.Count)
                     {
-                        ownerBuildingToTrade = owner.Cards[buildingIndex];
-                        Console.WriteLine($"You have chosen to trade your {ownerBuildingToTrade.Name}.");
+                        ownerBuilding = owner.Cards[buildingIndex];
+                        Console.WriteLine($"You have chosen to trade your {ownerBuilding.Name}.");
                         isChoosingOwnerBuilding = false;
                     }
                     else
                         Console.WriteLine("Invalid input. Please enter a valid building number.");
                 }
 
-                owner.Cards.Remove(ownerBuildingToTrade);
-                chosenPlayer.Cards.Add(ownerBuildingToTrade);
+                owner.Cards.Remove(ownerBuilding);
+                chosenPlayer.Cards.Add(ownerBuilding);
 
-                chosenPlayer.Cards.Remove(chosenPlayerBuildingToTrade);
-                owner.Cards.Add(chosenPlayerBuildingToTrade);
+                chosenPlayer.Cards.Remove(chosenPlayerBuilding);
+                owner.Cards.Add(chosenPlayerBuilding);
             };
         }
 

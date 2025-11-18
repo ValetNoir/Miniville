@@ -40,18 +40,20 @@ namespace Miniville
 				IEnumerable<Player> otherPlayers = Players.Where((val, idx) => idx != playingIndex);
 
 				// roooool the dice yea
-				int diceResult = dice.Roll();
-				Console.WriteLine($"{playingPlayer} lance le dé et fait {diceResult} !");
+				int diceResult = dice.Roll(); // logic to choose to play with 1 or 2 dices
+				Console.WriteLine($"{playingPlayer} rolled a {diceResult} !");
 
 				
 				//Check if PlayingPlayer have Blue or Red Card
 				
-				Console.WriteLine($"{playingPlayer} gagne {diceResult}$ ! (test)");
-				playingPlayer.Money += diceResult;
+				Console.WriteLine($"{playingPlayer} gagne {diceResult}$ ! (test)"); // in english please 🤓☝
+                playingPlayer.Money += diceResult;
 				
 				//Check if OthersPlayers have Blue or Green Card
 				
 				//PlayingPlayer can buy a card
+
+
 			}
 		}
 
@@ -62,7 +64,7 @@ namespace Miniville
 			{
 				if (Players[i].HasWon())
 				{
-					return i;
+					return i; // Equality ?
 				}
 			}
 			return null;
@@ -75,7 +77,7 @@ namespace Miniville
 			if (winerIndex == null) return false;
 
 			// win
-			Console.WriteLine($"{Players[(int)winerIndex]} a gagné ! GG");
+			Console.WriteLine($"{Players[(int)winerIndex]} won !");
 			return true;
 		}
 	}
