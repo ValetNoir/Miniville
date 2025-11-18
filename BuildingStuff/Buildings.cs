@@ -11,7 +11,7 @@ namespace Miniville.BuildingStuff
     internal class Buildings
     {
 
-        public readonly Card WHEAT_FIELD = new Card(
+        static public readonly Card WHEAT_FIELD = new Card(
             new int[] { 1 },
             CardColor.BLUE,
             CardType.WHEAT,
@@ -21,7 +21,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoney(1)
         );
 
-        public readonly Card FARM = new Card(
+        static public readonly Card FARM = new Card(
             new int[] { 2 },
             CardColor.BLUE,
             CardType.COW,
@@ -31,7 +31,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoney(1)
         );
 
-        public readonly Card BAKERY = new Card(
+        static public readonly Card BAKERY = new Card(
             new int[] { 2, 3 },
             CardColor.GREEN,
             CardType.SHOP,
@@ -41,7 +41,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoney(1)
         );
 
-        public readonly Card CAFE = new Card(
+        static public readonly Card CAFE = new Card(
             new int[] { 3 },
             CardColor.RED,
             CardType.CUP,
@@ -51,7 +51,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.StealMoneyFromCurrentPlayer(1)
         );
 
-        public readonly Card CONVENIENCE_STORE = new Card(
+        static public readonly Card CONVENIENCE_STORE = new Card(
             new int[] { 4 },
             CardColor.GREEN,
             CardType.SHOP,
@@ -61,7 +61,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoney(3)
         );
 
-        public readonly Card FOREST = new Card(
+        static public readonly Card FOREST = new Card(
             new int[] { 5 },
             CardColor.BLUE,
             CardType.GEAR,
@@ -71,7 +71,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoney(1)
         );
 
-        public readonly Card STADIUM = new Card(
+        static public readonly Card STADIUM = new Card(
             new int[] { 6 },
             CardColor.PURPLE,
             CardType.BOMB,
@@ -81,7 +81,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.StealMoneyFromAll(2)
         );
 
-        public readonly Card BUSINESS_CENTER = new Card(
+        static public readonly Card BUSINESS_CENTER = new Card(
             new int[] { 6 },
             CardColor.PURPLE,
             CardType.BOMB,
@@ -91,7 +91,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.TradeBuilding()
         );
 
-        public readonly Card TV_STATION = new Card(
+        static public readonly Card TV_STATION = new Card(
             new int[] { 6 },
             CardColor.PURPLE,
             CardType.BOMB,
@@ -101,7 +101,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.StealMoneyFromChosen(5)
         );
 
-        public readonly Card CHEESE_FACTORY = new Card(
+        static public readonly Card CHEESE_FACTORY = new Card(
             new int[] { 7 },
             CardColor.GREEN,
             CardType.FACTORY,
@@ -111,7 +111,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoneyPerType(3, CardType.COW)
         );
 
-        public readonly Card FURNITURE_FACTORY = new Card(
+        static public readonly Card FURNITURE_FACTORY = new Card(
             new int[] { 8 },
             CardColor.GREEN,
             CardType.FACTORY,
@@ -121,7 +121,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoneyPerType(3, CardType.GEAR)
         );
 
-        public readonly Card MINE = new Card(
+        static public readonly Card MINE = new Card(
             new int[] { 9 },
             CardColor.BLUE,
             CardType.GEAR,
@@ -131,7 +131,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoney(5)
         );
 
-        public readonly Card RESTAURANT = new Card(
+        static public readonly Card RESTAURANT = new Card(
             new int[] { 9, 10 },
             CardColor.RED,
             CardType.CUP,
@@ -141,7 +141,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.StealMoneyFromCurrentPlayer(2)
         );
 
-        public readonly Card ORCHARD = new Card(
+        static public readonly Card ORCHARD = new Card(
             new int[] { 10 },
             CardColor.BLUE,
             CardType.WHEAT,
@@ -151,7 +151,7 @@ namespace Miniville.BuildingStuff
             EffectsGenerator.Instance.GenerateMoney(3)
         );
 
-        public readonly Card FRUIT_AND_VEGETABLE_MARKET = new Card(
+        static public readonly Card FRUIT_AND_VEGETABLE_MARKET = new Card(
             new int[] { 11, 12 },
             CardColor.GREEN,
             CardType.SHOP,
