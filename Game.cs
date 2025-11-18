@@ -19,13 +19,13 @@ namespace Miniville
 			for (int i = 0; i < humanAmount; i++)
 			{
 				string actualName = (humanAmount > 1) ? $"humain {i+1}" : "humain";
-				playersList.Append(new Player(PlayerType.HUMAN, actualName));
+				playersList.Add(new Player(PlayerType.HUMAN, actualName));
 			}
 
 			for (int i = 0; i < botAmount; i++)
 			{
 				string actualName = (humanAmount > 1) ? $"bot {i+1}" : "bot";
-				playersList.Append(new Player(PlayerType.BOT, actualName));
+				playersList.Add(new Player(PlayerType.BOT, actualName));
 			}
 
 			Players = [.. playersList];
