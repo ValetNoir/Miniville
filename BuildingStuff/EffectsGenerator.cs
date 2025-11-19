@@ -1,7 +1,9 @@
 ﻿using Miniville.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -86,28 +88,38 @@ namespace Miniville.BuildingStuff
             {
                 var owner = players[ownerIndex];
 
-                string playerPrompt = $"Choose a player to steal {amount} coins from:\n";
-                for (int i = 0; i < players.Length; i++)
+                int chosenPlayerIndex = -1;
+
+                if (owner.Type = PlayerType.HUMAN)
                 {
-                    var player = players[i];
-                    if (player != owner)
-                        playerPrompt += $"Player {i}: (Money: {player.Money})\n";
+                    string playerPrompt = $"Choose a player to steal {amount} coins from:\n";
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        var player = players[i];
+                        if (player != owner)
+                            playerPrompt += $"Player {i}: (Money: {player.Money})\n";
+                    }
+
+                    chosenPlayerIndex = HumanInterface.AskIndex(playerPrompt, players.Length, ownerIndex);
+                    Console.WriteLine($"You have chosen Player {chosenPlayerIndex}.");
+
+                }
+                else if (owner.Type == PlayerType.BOT)
+                {
+                    chosenPlayerIndex = BotInterface.ChooseTargetIndex(players, ownerIndex);
+                    Console.WriteLine($"Bot Player {ownerIndex} has chosen Player {chosenPlayerIndex} to steal from.");
                 }
 
-                int chosenPlayerIndex = HumanInterface.AskIndex(playerPrompt, players.Length, ownerIndex);
-
                 Player chosenPlayer = players[chosenPlayerIndex];
-                Console.WriteLine($"You have chosen Player {chosenPlayerIndex}.");
-
                 int stealAmount = amount;
                 if (chosenPlayer.Money < amount)
                     stealAmount = chosenPlayer.Money;
 
                 chosenPlayer.Money -= stealAmount;
                 owner.Money += stealAmount;
+
             };
         }
-        
 
         public Action<Player[], int, int> TradeBuilding()
         {
@@ -117,121 +129,100 @@ namespace Miniville.BuildingStuff
 
                 bool canTrade = owner.Cards.Count > 0 && players.Any(p => p != owner && p.Cards.Count > 0);
 
-                if(!canTrade)
+                if (!canTrade)
                 {
-                    Console.WriteLine("Trade not possible. Either you or all other players have no buildings to trade.");
+                    Console.WriteLine("Trade impossible. Not enough buildings to trade.");
                     return;
                 }
 
-                bool wantsToTrade = false;
-                while (true)
+                int targetIndex = -1;
+                int targetBuildingIndex = -1;
+                int ownerBuildingIndex = -1;
+
+                if (owner.Type = PlayerType.HUMAN)
                 {
-                    Console.Write("Do you want to trade a building with another player? (y/n): ");
-                    var input = Console.ReadLine();
-                    if (input.ToLower() == "y")
-                    {
-                        wantsToTrade = true;
-                        break;
-                    }
-                    else if (input.ToLower() == "n")
-                    {
-                        wantsToTrade = false;
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
-                    }
-                }
+                    bool wantsToTrade = HumanInterface.AskBool("Do you want to trade a building with another player ?");
                 
-                if (!wantsToTrade)
-                {
-                    Console.WriteLine("Trade cancelled.");
-                    return;
-                }
+                    if (!wantsToTrade)
+                    {
+                        Console.WriteLine("Trade cancelled.");
+                        return;
+                    }
 
-                Console.WriteLine("Proceeding with trade...");
+                    Console.WriteLine("Proceeding with trade...");
 
-                Player chosenPlayer = null;
-                bool isChoosingPlayer = true;
-                while (isChoosingPlayer)
-                {
-                    Console.WriteLine("Choose a player to trade with:");
+                    string targetPrompt = $"Choose a player to steal to trade with:\n";
                     for (int i = 0; i < players.Length; i++)
                     {
                         var player = players[i];
                         if (player != owner)
-                            Console.WriteLine($"Player {i}");
+                            targetPrompt += $"Player {i}\n";
                     }
+                    targetPrompt += "Enter player number: ";
 
-                    Console.Write("Enter player number: ");
-                    var input = Console.ReadLine();
-                    if (int.TryParse(input, out int chosenIndex) && chosenIndex >= 0 && chosenIndex < players.Length)
-                    {
-                        if (chosenIndex != ownerIndex)
-                        {
-                            chosenPlayer = players[chosenIndex];
-                            Console.WriteLine($"You have chosen Player {chosenIndex}.");
-                            isChoosingPlayer = false;
-                        }
-                        else
-                            Console.WriteLine("Invalid player index. Please choose a player that is not yourself.");
-                    }
-                    else
-                        Console.WriteLine("Invalid input. Please enter a valid player number.");
-                }
+                    targetIndex = HumanInterface.AskIndex(targetPrompt, players.Length, ownerIndex);
 
-                Card chosenPlayerBuilding = null;
-                bool isChoosingChosenPlayerBuilding = true;
-                while (isChoosingChosenPlayerBuilding)
-                {
-                    Console.WriteLine("Choose one of THEIR buildings to trade:");
-                    Console.WriteLine("(You will receive this)");
-                    for (int i = 0; i < chosenPlayer.Cards.Count; i++)
-                    {
-                        var card = chosenPlayer.Cards[i];
-                        Console.WriteLine($"{i} : {card.Name}");
-                    }
-                    Console.Write("Enter building number: ");
-                    var input = Console.ReadLine();
-                    if (int.TryParse(input, out int buildingIndex) && buildingIndex >= 0 && buildingIndex < chosenPlayer.Cards.Count)
-                    {
-                        chosenPlayerBuilding = chosenPlayer.Cards[buildingIndex];
-                        Console.WriteLine($"You have chosen to receive their {chosenPlayerBuilding.Name}.");
-                        isChoosingChosenPlayerBuilding = false;
-                    }
-                    else
-                        Console.WriteLine("Invalid input. Please enter a valid building number.");
-                }
+                    Player target = players[targetIndex];
+                    Console.WriteLine($"You have chosen Player {targetIndex}.");
 
-                Card ownerBuilding = null;
-                bool isChoosingOwnerBuilding = true;
-                while (isChoosingOwnerBuilding)
-                {
-                    Console.WriteLine("Choose one of YOUR buildings to trade:");
-                    Console.WriteLine("(You will give this)");
+                    string targetBuildingPrompt = $"Choose one of their building:\n";
+                    for (int i = 0; i < target.Cards.Count; i++)
+                    {
+                        var card = target.Cards[i];
+                        targetBuildingPrompt += $"{i} : {card.Name}\n";
+                    }
+                    targetBuildingPrompt += "Enter building number: ";
+
+                    targetBuildingIndex = HumanInterface.AskIndex(targetBuildingPrompt, target.Cards.Count);
+
+                    Card targetBuilding = target.Cards[targetBuildingIndex];
+                    Console.WriteLine($"You have chosen to receive their {targetBuilding.Name}.");
+
+                    string ownerBuildingPrompt = $"Choose one of your buildings:\n";
                     for (int i = 0; i < owner.Cards.Count; i++)
                     {
                         var card = owner.Cards[i];
-                        Console.WriteLine($"{i} : {card.Name}");
+                        ownerBuildingPrompt += $"{i} : {card.Name}\n";
                     }
-                    Console.Write("Enter building number: ");
-                    var input = Console.ReadLine();
-                    if (int.TryParse(input, out int buildingIndex) && buildingIndex >= 0 && buildingIndex < owner.Cards.Count)
+                    ownerBuildingPrompt += "Enter building number: ";
+
+                    ownerBuildingIndex = HumanInterface.AskIndex(ownerBuildingPrompt, owner.Cards.Count);
+
+                    Card ownerBuilding = owner.Cards[ownerBuildingIndex];
+                    Console.WriteLine($"You have chosen to give your {ownerBuilding.Name}.");
+
+                    owner.Cards.Remove(ownerBuilding);
+                    target.Cards.Add(ownerBuilding);
+
+                    target.Cards.Remove(targetBuilding);
+                    owner.Cards.Add(targetBuilding);
+
+                    Console.WriteLine($"Trade completed: Player {ownerIndex} traded their {ownerBuilding.Name} for Player {targetIndex}'s {targetBuilding.Name}.");
+                }
+                else if(owner.Type == PlayerType.BOT)
+                {
+                    bool wantsToTrade = BotInterface.WantsToTrade();
+
+                    if (!wantsToTrade)
                     {
-                        ownerBuilding = owner.Cards[buildingIndex];
-                        Console.WriteLine($"You have chosen to trade your {ownerBuilding.Name}.");
-                        isChoosingOwnerBuilding = false;
+                        Console.WriteLine("Bot doesn't wan to trade.");
+                        return;
                     }
-                    else
-                        Console.WriteLine("Invalid input. Please enter a valid building number.");
+
+                    int targetIndex = BotInterface.ChooseTargetIndex(players, ownerIndex);
+                    Player target = players[targetIndex];
+                    Card ownerBuilding = BotInterface.ChooseCard(owner);
+                    Card targetBuilding = BotInterface.ChooseCard(target);
+
+                    owner.Cards.Remove(ownerBuilding);
+                    target.Cards.Add(ownerBuilding);
+
+                    target.Cards.Remove(targetBuilding);
+                    owner.Cards.Add(targetBuilding);
+
+                    Console.WriteLine($"Bot Player {ownerIndex} traded their {ownerBuilding.Name} for Player {targetIndex}'s {targetBuilding.Name}.");
                 }
 
-                owner.Cards.Remove(ownerBuilding);
-                chosenPlayer.Cards.Add(ownerBuilding);
-
-                chosenPlayer.Cards.Remove(chosenPlayerBuilding);
-                owner.Cards.Add(chosenPlayerBuilding);
             };
         }
         #endregion
