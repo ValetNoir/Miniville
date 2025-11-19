@@ -8,7 +8,7 @@ namespace Miniville
 	{
 		public Player[] Players = [];
 		public int CurrentTurnPlayerIndex;
-		public Dictionary<Card, int> BuildingsAmountLeft = new Dictionary<Card, int>();
+		public List<Pile> Shop;
 		private Dice dice = new();
 		private int turns = 0;
 
@@ -140,6 +140,27 @@ namespace Miniville
 			return true;
 		}
 
+		private void InitShop()
+		{
+			Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+			Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
+
+
+        }
+
 		private void CardShop()
 		{
 			Player player = Players[CurrentTurnPlayerIndex];
@@ -148,12 +169,17 @@ namespace Miniville
 			{
 				if (!HumanInterface.AskBool("It is shopping time! Would you like to buy a card?")) return;
 				
-				Console.WriteLine("you can buy one of these:");
+				Console.WriteLine("you can buy one of these: (enter number)");
+				int cardIndex = 0;
 				foreach (var card in BuildingsAmountLeft)
 				{
 					if(card.Value > 0)
-						Console.WriteLine($"[{card.Key.ActiveNumbers}] {card.Key.Color} - {card.Key.Name} : {card.Key.Desc} - {card.Key.Price}$");
+					{
+						cardIndex++;
+                        Console.WriteLine($"({cardIndex})  --  [{card.Key.ActiveNumbers}] {card.Key.Color} - {card.Key.Name} : {card.Key.Desc} - {card.Key.Price}$");
+                    }
 				}
+				Card chosenCard = HumanInterface.AskIndex("", ++cardIndex);
 			}
 			else
 			{
