@@ -181,7 +181,12 @@ namespace Miniville
 					{
                         cardIndex++;
 						var card = Shop[i].Loop()[0];
-                        Console.WriteLine($"({cardIndex})  --  [{card.ActiveNumbers}] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
+                        Console.Write($"({cardIndex})  --  [ ");
+                        foreach (var number in card.ActiveNumbers)
+                        {
+                            Console.Write($"{number} ");
+                        }
+                        Console.WriteLine($"] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
                         Thread.Sleep(200);
                     }
                 }
@@ -201,7 +206,12 @@ namespace Miniville
                     {
                         cardIndex++;
                         var card = Shop[i].Loop()[0];
-                        Console.WriteLine($"({cardIndex})  --  [{card.ActiveNumbers}] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
+                        Console.Write($"({cardIndex})  --  [ ");
+                        foreach (var number in card.ActiveNumbers)
+                        {
+                            Console.Write($"{number} ");
+                        }
+                        Console.WriteLine($"] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
                         Thread.Sleep(200);
                     }
                 }
