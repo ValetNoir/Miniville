@@ -25,5 +25,20 @@ namespace Miniville
                     Console.WriteLine("Invalid input. Please enter a valid player number.");
             }
         }
+
+        public static bool AskBool(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt + " (y/n): ");
+                var input = Console.ReadLine().ToLower();
+                if (input == "y")
+                    return true;
+                else if (input == "n")
+                    return false;
+                else
+                    Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+            }
+        }
     }
 }
