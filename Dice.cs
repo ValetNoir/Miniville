@@ -10,20 +10,20 @@ namespace Miniville
     {
         private Random rdm = new Random();
 
-        public int Roll(bool multiDice = false)
+        public (int[] faces, int total) Roll(bool multiDice = false)
         {
-            int resultD1 = rdm.Next(7);
+            int resultD1 = rdm.Next(1,7);
             if (multiDice)
             {
-                int resultD2 = rdm.Next(7);
+                int resultD2 = rdm.Next(1,7);
                 int total = resultD1 + resultD2;
-                Console.WriteLine("Dices result : {0}, {1}  Total : {2}", resultD1, resultD2, total);
-                return total;
+                int[] result = { resultD1, resultD2 };
+                return (result, total);
             }
             else
             {
-                Console.WriteLine($"Dice result : {resultD1}");
-                return resultD1;
+                int[] result = { resultD1 };
+                return (result, resultD1);
             }
         }
     }
