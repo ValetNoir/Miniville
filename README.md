@@ -29,4 +29,4 @@ How to play at Minivilles
 
 ## UML
 
-!(https://github.com/ValetNoir/Miniville/blob/master/uml.png)
+<img src=https://github.com/ValetNoir/Miniville/blob/master/uml.png>
