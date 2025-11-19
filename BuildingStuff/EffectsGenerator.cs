@@ -86,34 +86,18 @@ namespace Miniville.BuildingStuff
             {
                 var owner = players[ownerIndex];
 
-                Player chosenPlayer = null;
-                bool isChoosing = true;
-                while (isChoosing)
+                string playerPrompt = $"Choose a player to steal {amount} coins from:\n";
+                for (int i = 0; i < players.Length; i++)
                 {
-                    Console.WriteLine("Choose a player to steal from:");
-                    for (int i = 0; i < players.Length; i++)
-                    {
-                        var player = players[i];
-                        if (player != owner)
-                            Console.WriteLine($"Player {i}: (Money: {player.Money})");
-                    }
-
-                    Console.Write("Enter player number: ");
-                    var input = Console.ReadLine();
-                    if (int.TryParse(input, out int chosenIndex) && chosenIndex >= 0 && chosenIndex < players.Length)
-                    {
-                        if (chosenIndex != ownerIndex)
-                        {
-                            chosenPlayer = players[chosenIndex];
-                            Console.WriteLine($"You have chosen Player {chosenIndex}.");
-                            isChoosing = false;
-                        }
-                        else
-                            Console.WriteLine("Invalid player index. Please choose a player that is not yourself.");
-                    }
-                    else
-                        Console.WriteLine("Invalid input. Please enter a valid player number.");
+                    var player = players[i];
+                    if (player != owner)
+                        playerPrompt += $"Player {i}: (Money: {player.Money})\n";
                 }
+
+                int chosenPlayerIndex = HumanInterface.AskIndex(playerPrompt, players.Length, ownerIndex);
+
+                Player chosenPlayer = players[chosenPlayerIndex];
+                Console.WriteLine($"You have chosen Player {chosenPlayerIndex}.");
 
                 int stealAmount = amount;
                 if (chosenPlayer.Money < amount)

@@ -1,22 +1,43 @@
 @startuml Miniville
 skinparam classAttributeIconSize 0
 
-enum Type{
-  BLEU
-  VERT
-  ROUGE
-  VIOLET
-  MONUMENT
+enum CardColor
+{
+    BLUE
+    GREEN
+    RED
+    PURPLE
+    YELLOW
+}
+
+enum CardType
+{
+    WHEAT
+    COW
+    SHOP
+    CUP
+    GEAR
+    TOWER
+    FACTORY
+    BOMB
+}
+
+enum PlayerType
+{
+    HUMAN
+    BOT
 }
 
 class Card {
-  + ActiveNumbers {readonly} : int[]
-  + Type {readonly} : type
-  + Price {readonly} : int 
-  + Name {readonly} : string
-  + Description {readonly} : string
-  - action : Func<Game, int, void>
-  + Act(gameState : Game, ownerPlayerIndex : int) : void
+    + ActiveNumbers {readonly} : int[]
+    + CardColor {readonly} : Color;
+    + CardType {readonly} : Type;
+    + Name {readonly} : string
+    + Desc {readonly} : string
+    + Price {readonly} : int
+    + Effect {readonly} : Action<Player[], int, int>
+        
+    + Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, Action<Player[], int, int> effect)
 }
 
 static class Globals {
