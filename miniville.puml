@@ -40,56 +40,39 @@ class Card {
     + Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, Action<Player[], int, int> effect)
 }
 
-static class Globals {
-  + Cards {const} : Dictionnary<Building, Card>
+static class Buildings {
+    + WHEAT_FIELD {readonly} : Card
+    + FARM {readonly} : Card
+    + BAKERY {readonly} : Card
+    + CAFE {readonly} : Card
+    + CONVENIENCE_STORE {readonly} : Card
+    + FOREST {readonly} : Card
+    + STADIUM {readonly} : Card
+    + BUSINESS_CENTER {readonly} : Card
+    + TV_STATION {readonly} : Card
+    + CHEESE_FACTORY {readonly} : Card
+    + FURNITURE_FACTORY {readonly} : Card
+    + MINE {readonly} : Card
+    + RESTAURANT {readonly} : Card
+    + ORCHARD {readonly} : Card
+    + FRUIT_AND_VEGETABLE_MARKET {readonly} : Card
 }
 
-enum Building {
-  CHAMPS_DE_BLE
-  FERME
-  BOULANGERIE
-  CAFE
-  SUPERETTE
-  FORET
-  STADE
-  CENTRE_D_AFFAIRES
-  CHAINE_DE_TELEVISION
-  FROMAGERIE
-  FABRIQUE_DE_MEUBLES
-  MINE
-  RESTAURANT
-  VERGER
-  MARCHE_DE_FRUITS_ET_LEGUMES
-  GARE
-  CENTRE_COMMERCIAL
-  TOUR_RADIO
-  PARC_D_ATTRACTIONS
+static class EffectsGenerator {
+    + GenerateMoney(amount: int) {static} : Action<Player[], int, int>
+    + GenerateMoneyPerType(amount: int, type: CardType) {static} : Action<Player[], int, int>
+    + StealMoneyFromCurrentPlayer(amount: int) {static} : Action<Player[], int, int>
+    + StealMoneyFromAll(amount: int) {static} : Action<Player[], int, int>
+    + StealMoneyFromChosen(amount: int) {static} : Action<Player[], int, int>
+    + TradeBuilding() {static} : Action<Player[], int, int>
 }
 
-class Game {
-  - random : Random
-  + Players : Player[]
-  + CurrentTurnPlayerIndex {readonly} : int
-  + BuildingsAmountLeft : Dictionnary<Building, int>
-  + PlayTurn() : void
-  + RollDices(dicesNumber : int) : int
+static class BotInterface {
+    + AskIndex(arrayLength: int, excludeIndex: int) {static} : int
+    + AskBool() {static} : bool
 }
 
-class Player {
-  + Buildings : List<Building>
-  + Money : int
-  + GetTypeAmount(type : Type) : void
-  + BuyBuilding(building : Building) : void
-  + HasBuilding(building : Building) : bool
-  + HasWon() : bool
+static class HumanInterface {
+    + AskIndex(text: string, arrayLength: int, excludeIndex: int) {static} : int
+    + AskBool(prompt: string) {static} : bool
 }
-
-Type --o Card
-Card --* Globals
-Building --o Globals
-Player -.> Globals
-Game -.> Globals
-Building -o Player
-Building -o Game
-Player "1" --* "2..4" Game
-@enduml

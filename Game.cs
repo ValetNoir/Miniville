@@ -1,5 +1,6 @@
 using Miniville.BuildingStuff;
 using Miniville.Enums;
+using Miniville.Interfaces;
 using System.Runtime.CompilerServices;
 
 namespace Miniville
