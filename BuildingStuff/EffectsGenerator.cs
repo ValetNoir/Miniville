@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Miniville.BuildingStuff
 {
-    internal class EffectsGenerator
+    internal static class EffectsGenerator
     {
-        public static readonly EffectsGenerator Instance = new EffectsGenerator();
 
         #region blue/red/green cards effects 
-        public Action<Player[], int, int> GenerateMoney(int amount)
+        public static Action<Player[], int, int> GenerateMoney(int amount)
         {
             return (players, ownerIndex, currentPlayerIndex) =>
             {
@@ -25,7 +24,7 @@ namespace Miniville.BuildingStuff
             };
         }
 
-        public Action<Player[], int, int> GenerateMoneyPerType(int amount, CardType type)
+        public static Action<Player[], int, int> GenerateMoneyPerType(int amount, CardType type)
         {
             return (players, ownerIndex, currentPlayerIndex) =>
             {
@@ -37,7 +36,7 @@ namespace Miniville.BuildingStuff
             };
         }
 
-        public Action<Player[], int, int> StealMoneyFromCurrentPlayer(int amount)
+        public static Action<Player[], int, int> StealMoneyFromCurrentPlayer(int amount)
         {
             return (players, ownerIndex, currentPlayerIndex) =>
             {
@@ -56,7 +55,7 @@ namespace Miniville.BuildingStuff
         #endregion
 
         #region purple cards effects
-        public Action<Player[], int, int> StealMoneyFromAll(int amount)
+        public static Action<Player[], int, int> StealMoneyFromAll(int amount)
         {
             return (players, ownerIndex, currentPlayerIndex) =>
             {
@@ -82,7 +81,7 @@ namespace Miniville.BuildingStuff
             };
         }
 
-        public Action<Player[], int, int> StealMoneyFromChosen(int amount)
+        public static Action<Player[], int, int> StealMoneyFromChosen(int amount)
         {
             return (players, ownerIndex, currentPlayerIndex) =>
             {
@@ -106,7 +105,7 @@ namespace Miniville.BuildingStuff
                 }
                 else if (owner.Type == PlayerType.BOT)
                 {
-                    chosenPlayerIndex = BotInterface.ChooseTargetIndex(players, ownerIndex);
+                    chosenPlayerIndex = BotInterface.AskIndex(players.Length, ownerIndex);
                     Console.WriteLine($"Bot Player {ownerIndex} has chosen Player {chosenPlayerIndex} to steal from.");
                 }
 
@@ -121,7 +120,7 @@ namespace Miniville.BuildingStuff
             };
         }
 
-        public Action<Player[], int, int> TradeBuilding()
+        public static Action<Player[], int, int> TradeBuilding()
         {
             return (players, ownerIndex, currentPlayerIndex) =>
             {
@@ -201,7 +200,7 @@ namespace Miniville.BuildingStuff
                 }
                 else if(owner.Type == PlayerType.BOT)
                 {
-                    bool wantsToTrade = BotInterface.WantsToTrade();
+                    bool wantsToTrade = BotInterface.AskBool();
 
                     if (!wantsToTrade)
                     {
@@ -209,10 +208,13 @@ namespace Miniville.BuildingStuff
                         return;
                     }
 
-                    int targetIndex = BotInterface.ChooseTargetIndex(players, ownerIndex);
+                    targetIndex = BotInterface.AskIndex(players.Length, ownerIndex);
                     Player target = players[targetIndex];
-                    Card ownerBuilding = BotInterface.ChooseCard(owner);
-                    Card targetBuilding = BotInterface.ChooseCard(target);
+                    ownerBuildingIndex = BotInterface.AskIndex(owner.Cards.Count);
+                    targetBuildingIndex = BotInterface.AskIndex(target.Cards.Count);
+
+                    Card ownerBuilding = owner.Cards[ownerBuildingIndex];
+                    Card targetBuilding = target.Cards[targetBuildingIndex];
 
                     owner.Cards.Remove(ownerBuilding);
                     target.Cards.Add(ownerBuilding);
@@ -220,7 +222,7 @@ namespace Miniville.BuildingStuff
                     target.Cards.Remove(targetBuilding);
                     owner.Cards.Add(targetBuilding);
 
-                    Console.WriteLine($"Bot Player {ownerIndex} traded their {ownerBuilding.Name} for Player {targetIndex}'s {targetBuilding.Name}.");
+                    Console.WriteLine($"Trade completed: Player {ownerIndex} traded their {ownerBuilding.Name} for Player {targetIndex}'s {targetBuilding.Name}.");
                 }
 
             };

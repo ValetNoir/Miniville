@@ -8,10 +8,10 @@ namespace Miniville
 {
     internal static class BotInterface
     {
+        private static Random random = new Random();
+
         public static int AskIndex(int arrayLength, int excludedIndex = -1)
         {
-            Random random = new Random();
-
             var exclude = new HashSet<int>() { excludedIndex };
             var range = Enumerable.Range(1, 100).Where(i => !exclude.Contains(i));
 
