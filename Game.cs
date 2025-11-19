@@ -63,55 +63,17 @@ namespace Miniville
 
                 //Check if PlayingPlayer have Blue or Green Card & activate card
                 foreach (Card card in playingPlayer.Cards)
-                {
-                    if (card.Color == CardColor.BLUE || card.Color == CardColor.GREEN)
-					{
-                        if (card.ActiveNumbers.Length > 1) // double active number
-                        {
-							if (card.ActiveNumbers.Contains(diceResult.faces[0]))	// dice 1
-							{
-                                card.Effect(Players, CurrentTurnPlayerIndex, CurrentTurnPlayerIndex);
-                            }
-							if (diceResult.faces.Length > 1 && card.ActiveNumbers.Contains(diceResult.faces[1]))	// dice 2 (if it exists)
-							{
-                                card.Effect(Players, CurrentTurnPlayerIndex, CurrentTurnPlayerIndex);
-                            }
-						}
-						else if (card.ActiveNumbers.Contains(diceResult.total)) // single active number
-                        {
-							card.Effect(Players, CurrentTurnPlayerIndex, CurrentTurnPlayerIndex);
-						}
-                    }
-                }
+					if ((card.Color == CardColor.BLUE || card.Color == CardColor.GREEN) && card.ActiveNumbers.Contains(diceResult.total))
+						card.Effect(Players, CurrentTurnPlayerIndex, CurrentTurnPlayerIndex);
 
                 //Check if OthersPlayers have Blue or Red Card & activate card
                 int ownerIndex = 0;
                 foreach (Player player in Players)
 				{
 					if (player != playingPlayer)	// exclude playing player
-					{
 						foreach (Card card in player.Cards)
-						{
-                            if (card.Color == CardColor.BLUE || card.Color == CardColor.RED)
-                            {
-                                if (card.ActiveNumbers.Length > 1) // double active number
-                                {
-                                    if (card.ActiveNumbers.Contains(diceResult.faces[0]))   // dice 1
-                                    {
-                                        card.Effect(Players, ownerIndex, CurrentTurnPlayerIndex);
-                                    }
-                                    if (diceResult.faces.Length > 1 && card.ActiveNumbers.Contains(diceResult.faces[1]))    // dice 2 (if it exists)
-                                    {
-                                        card.Effect(Players, ownerIndex, CurrentTurnPlayerIndex);
-                                    }
-                                }
-                                else if (card.ActiveNumbers.Contains(diceResult.total)) // single active number
-                                {
-                                    card.Effect(Players, ownerIndex, CurrentTurnPlayerIndex);
-                                }
-                            }
-                        }
-                    }
+							if ((card.Color == CardColor.BLUE || card.Color == CardColor.RED) && card.ActiveNumbers.Contains(diceResult.total))
+                                card.Effect(Players, ownerIndex, CurrentTurnPlayerIndex);
 					ownerIndex++;
 				}
 
