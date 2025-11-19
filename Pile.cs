@@ -5,21 +5,18 @@ namespace Miniville
 	class Pile
 	{
 		public List<Card> Cards = [];
-		public Pile() {}
+		public Pile(Card newCardReference)
+		{
+            for (int i = 0; i < 6; i++)
+            {
+                Cards.Add(newCardReference);
+            }
+        }
 
 		public void Stack(Card newCardReference)
 		{
 			Cards.Add(newCardReference);
 		}
-
-        public Pile InitStack(Card newCardReference)
-        {
-			for (int i = 0; i < 6; i++)
-			{
-                Cards.Add(newCardReference);
-            }
-			return this;
-        }
 
         public bool IsEmpty()
 		{
@@ -28,13 +25,13 @@ namespace Miniville
 
 		public Card Top()
 		{
-			return Cards[Cards.Count];
+			return Cards[Cards.Count - 1];
 		}
 
 		public Card Pickup()
 		{
-			Card pickedUpCardReference = Cards[Cards.Count];
-			Cards.RemoveAt(Cards.Count);
+			Card pickedUpCardReference = Cards[Cards.Count-1];
+			Cards.RemoveAt(Cards.Count-1);
 			return pickedUpCardReference;
 		}
 
