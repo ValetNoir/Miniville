@@ -12,8 +12,8 @@ namespace Miniville
     {
         public List<Card> Cards = new List<Card>();
         public int Money = 0;
-        private readonly string Name;
-        private readonly PlayerType Type;
+        public readonly string Name;
+        public readonly PlayerType Type;
 
 
         public Player(PlayerType playerType = PlayerType.HUMAN, string name = "machin")
