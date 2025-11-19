@@ -12,7 +12,16 @@ namespace Miniville
 			Cards.Add(newCardReference);
 		}
 
-		public bool IsEmpty()
+        public Pile InitStack(Card newCardReference)
+        {
+			for (int i = 0; i < 6; i++)
+			{
+                Cards.Add(newCardReference);
+            }
+			return this;
+        }
+
+        public bool IsEmpty()
 		{
 			return Cards.Count == 0;
 		}

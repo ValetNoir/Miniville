@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Miniville.BuildingStuff
 {
 
-    internal class Buildings
+    internal static class Buildings
     {
 
         static public readonly Card WHEAT_FIELD = new Card(
