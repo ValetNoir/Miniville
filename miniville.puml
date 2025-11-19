@@ -76,3 +76,27 @@ static class HumanInterface {
     + AskIndex(text: string, arrayLength: int, excludeIndex: int) {static} : int
     + AskBool(prompt: string) {static} : bool
 }
+
+class Dice {
+    - rdm : Random
+    + Roll() : (int[] faces, int total)
+}
+
+class Game {
+    + Players : Player[]
+    + CurrentPlayerIndex: int
+    + Shop : List<Pile>
+    - dice : Dice
+    - turns : int
+    + Game(humanAmount = 1: int, botAmount = 1: int)
+    + Loop() : void
+    + GetWinnerIndex() : int?
+    + Ended() : bool
+    - InitShop() : void
+    - CardShop() : void
+}
+
+class Pile {
+    + Cards : List<Card>
+    + Pile(card: Card)
+}
