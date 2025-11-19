@@ -109,9 +109,9 @@ namespace Miniville
                     }
 					ownerIndex++;
 				}
-								
-				//PlayingPlayer can buy a card
 
+				//PlayingPlayer can buy a card
+				CardShop();
 
 			}
 		}
@@ -142,9 +142,22 @@ namespace Miniville
 
 		private void CardShop()
 		{
-			if (Players[CurrentTurnPlayerIndex].Type == PlayerType.HUMAN)
+			Player player = Players[CurrentTurnPlayerIndex];
+
+			if (player.Type == PlayerType.HUMAN)
 			{
 				if (!HumanInterface.AskBool("It is shopping time! Would you like to buy a card?")) return;
+				
+				Console.WriteLine("you can buy one of these:");
+				foreach (var card in BuildingsAmountLeft)
+				{
+					if(card.Value > 0)
+						Console.WriteLine($"[{card.Key.ActiveNumbers}] {card.Key.Color} - {card.Key.Name} : {card.Key.Desc} - {card.Key.Price}$");
+				}
+			}
+			else
+			{
+
 			}
 		}
 	}
