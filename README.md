@@ -30,3 +30,12 @@ How to play at Minivilles
 ## UML
 
 <img src=https://github.com/ValetNoir/Miniville/blob/master/uml.png>
+
+## Tool used
+
+- Visual Studio 2022
+- C# .NET 8.0
+- PlantUML
+- GitHub
+- Markdown
+- Miro : [Here is our board](https://miro.com/app/live-embed/uXjVJp_tq4Y=/?embedMode=view_only_without_ui&moveToViewport=-3237%2C-1657%2C4634%2C2390&embedId=31949799051)
