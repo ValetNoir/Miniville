@@ -56,7 +56,12 @@ namespace Miniville
             Console.WriteLine($"{this.Name}'s cards are:");
             foreach (Card card in Cards)
             {
-                Console.WriteLine($"[{card.ActiveNumbers}] {card.Color} - {card.Name} : {card.Desc}");
+                Console.Write("[ ");
+                foreach(var number in card.ActiveNumbers)
+                {
+                    Console.Write($"{number} ");
+                }
+                Console.WriteLine($"] {card.Color} - {card.Name} : {card.Desc}");
             }
         }
     }
