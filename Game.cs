@@ -168,7 +168,9 @@ namespace Miniville
 		{
 			Player player = Players[CurrentTurnPlayerIndex];
 
-			if (player.Type == PlayerType.HUMAN)
+            Console.WriteLine($"{player.Name} has {player.Money} coin(s)");
+
+            if (player.Type == PlayerType.HUMAN)
 			{
 				if (!HumanInterface.AskBool("\nIt is shopping time! Would you like to buy a card?")) return;
 				Thread.Sleep(1000);
@@ -187,11 +189,11 @@ namespace Miniville
                             Console.Write($"{number} ");
                         }
                         Console.WriteLine($"] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
-                        Thread.Sleep(200);
+                        Thread.Sleep(100);
                     }
                 }
 				Console.WriteLine();
-				int cardBoughtIndex = HumanInterface.AskIndex("", ++cardIndex);
+				int cardBoughtIndex = HumanInterface.AskIndex("", ++cardIndex, 0);
 				player.BuyCard(Shop[--cardBoughtIndex].Pickup());
 			}
 			else
@@ -215,8 +217,8 @@ namespace Miniville
                         Thread.Sleep(200);
                     }
                 }
-                int cardBoughtIndex = BotInterface.AskIndex(++cardIndex);
-                player.BuyCard(Shop[--cardBoughtIndex].Pickup());
+                int cardBoughtIndex = BotInterface.AskIndex(cardIndex);
+                player.BuyCard(Shop[cardBoughtIndex].Pickup());
             }
 		}
 
