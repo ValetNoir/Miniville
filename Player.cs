@@ -11,15 +11,15 @@ namespace Miniville
     internal class Player
     {
         public List<Card> Cards = new List<Card>();
-        public int Money = 0;
+        public int Money;
         public readonly string Name;
         public readonly PlayerType Type;
-
 
         public Player(PlayerType playerType = PlayerType.HUMAN, string name = "machin")
         {
             Name = name;
             Type = playerType;
+            Money = 3;
             Cards.Add(Buildings.WHEAT_FIELD);
             Cards.Add(Buildings.BAKERY);
         }
