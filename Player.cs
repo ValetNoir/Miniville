@@ -30,6 +30,11 @@ namespace Miniville
             {
                 this.Money -= building.Price;
                 this.Cards.Add(building);
+                Console.WriteLine($"{this.Name} bought a {building.Name}");
+            }
+            else
+            {
+                Console.WriteLine($"Not enough money. Bank issue on {this.Name} side loooser");
             }
         }
         public bool HasBuilding(Card building) //Return if the player have the building or not
@@ -45,5 +50,14 @@ namespace Miniville
 		{
 			return Name;
 		}
+
+        public void DisplayCards()
+        {
+            Console.WriteLine($"{this.Name}'s cards are:");
+            foreach (Card card in Cards)
+            {
+                Console.WriteLine($"[{card.ActiveNumbers}] {card.Color} - {card.Name} : {card.Desc}");
+            }
+        }
     }
 }
