@@ -7,7 +7,7 @@ namespace Miniville
 	class Game
 	{
 		public Player[] Players = [];
-		public readonly int CurrentTurnPlayerIndex;
+		public int CurrentTurnPlayerIndex;
 		public Dictionary<Card, int> BuildingsAmountLeft = new Dictionary<Card, int>();
 		private Dice dice = new();
 		private int turns = 0;
@@ -41,39 +41,45 @@ namespace Miniville
 			{
 				// get the playing player and the others
 				turns++;
-				int playingIndex = turns % Players.Length;
-				Player playingPlayer = Players[playingIndex];
-				IEnumerable<Player> otherPlayers = Players.Where((val, idx) => idx != playingIndex);
+				CurrentTurnPlayerIndex = turns % Players.Length;
+				Player playingPlayer = Players[CurrentTurnPlayerIndex];
+				IEnumerable<Player> otherPlayers = Players.Where((val, idx) => idx != CurrentTurnPlayerIndex);
 
-                // roooool the dice yea
-                // logic to choose to play with 1 or 2 dices -> argument true for 2 dices
-                var diceResult = dice.Roll();
+				// roooool the dice yea
+				// logic to choose to play with 1 or 2 dices -> argument true for 2 dices
+				bool isDoubleDice;
+				if (Players[CurrentTurnPlayerIndex].Type == PlayerType.HUMAN)
+					isDoubleDice = HumanInterface.AskBool("Do you want to roll 2 dices?");
+				else
+					isDoubleDice = BotInterface.AskBool();
+                
+				var diceResult = dice.Roll(isDoubleDice);
 				Console.WriteLine($"{playingPlayer} rolled a {diceResult.total} !");
 
-                //Check if PlayingPlayer have Blue or Red Card & activate card
+                //Check if PlayingPlayer have Blue or Green Card & activate card
                 foreach (Card card in playingPlayer.Cards)
                 {
-                    if (card.Color == CardColor.BLUE || card.Color == CardColor.RED)
+                    if (card.Color == CardColor.BLUE || card.Color == CardColor.GREEN)
 					{
                         if (card.ActiveNumbers.Length > 1) // double active number
                         {
 							if (card.ActiveNumbers.Contains(diceResult.faces[0]))	// dice 1
 							{
-                                card.Effect(Players, playingIndex, playingIndex);
+                                card.Effect(Players, CurrentTurnPlayerIndex, CurrentTurnPlayerIndex);
                             }
 							if (diceResult.faces.Length > 1 && card.ActiveNumbers.Contains(diceResult.faces[1]))	// dice 2 (if it exists)
 							{
-                                card.Effect(Players, playingIndex, playingIndex);
+                                card.Effect(Players, CurrentTurnPlayerIndex, CurrentTurnPlayerIndex);
                             }
 						}
 						else if (card.ActiveNumbers.Contains(diceResult.total)) // single active number
                         {
-							card.Effect(Players, playingIndex, playingIndex);
+							card.Effect(Players, CurrentTurnPlayerIndex, CurrentTurnPlayerIndex);
 						}
                     }
                 }
 
-                //Check if OthersPlayers have Blue or Green Card & activate card
+                //Check if OthersPlayers have Blue or Red Card & activate card
                 int ownerIndex = 0;
                 foreach (Player player in Players)
 				{
@@ -81,31 +87,31 @@ namespace Miniville
 					{
 						foreach (Card card in player.Cards)
 						{
-                            if (card.Color == CardColor.BLUE || card.Color == CardColor.GREEN)
+                            if (card.Color == CardColor.BLUE || card.Color == CardColor.RED)
                             {
                                 if (card.ActiveNumbers.Length > 1) // double active number
                                 {
                                     if (card.ActiveNumbers.Contains(diceResult.faces[0]))   // dice 1
                                     {
-                                        card.Effect(Players, ownerIndex, playingIndex);
+                                        card.Effect(Players, ownerIndex, CurrentTurnPlayerIndex);
                                     }
                                     if (diceResult.faces.Length > 1 && card.ActiveNumbers.Contains(diceResult.faces[1]))    // dice 2 (if it exists)
                                     {
-                                        card.Effect(Players, ownerIndex, playingIndex);
+                                        card.Effect(Players, ownerIndex, CurrentTurnPlayerIndex);
                                     }
                                 }
                                 else if (card.ActiveNumbers.Contains(diceResult.total)) // single active number
                                 {
-                                    card.Effect(Players, ownerIndex, playingIndex);
+                                    card.Effect(Players, ownerIndex, CurrentTurnPlayerIndex);
                                 }
                             }
                         }
                     }
 					ownerIndex++;
 				}
-								
-				//PlayingPlayer can buy a card
 
+				//PlayingPlayer can buy a card
+				CardShop();
 
 			}
 		}
@@ -132,6 +138,27 @@ namespace Miniville
 			// win
 			Console.WriteLine($"{Players[(int)winerIndex]} won !");
 			return true;
+		}
+
+		private void CardShop()
+		{
+			Player player = Players[CurrentTurnPlayerIndex];
+
+			if (player.Type == PlayerType.HUMAN)
+			{
+				if (!HumanInterface.AskBool("It is shopping time! Would you like to buy a card?")) return;
+				
+				Console.WriteLine("you can buy one of these:");
+				foreach (var card in BuildingsAmountLeft)
+				{
+					if(card.Value > 0)
+						Console.WriteLine($"[{card.Key.ActiveNumbers}] {card.Key.Color} - {card.Key.Name} : {card.Key.Desc} - {card.Key.Price}$");
+				}
+			}
+			else
+			{
+
+			}
 		}
 	}
 }
