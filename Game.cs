@@ -20,7 +20,7 @@ namespace Miniville
 
 			for (int i = 0; i < humanAmount; i++)
 			{
-				string actualName = (humanAmount > 1) ? $"humain {i+1}" : "humain";
+				string actualName = (humanAmount > 1) ? $"human {i+1}" : "human";
 				playersList.Add(new Player(PlayerType.HUMAN, actualName));
 			}
 
@@ -33,7 +33,7 @@ namespace Miniville
 			InitShop();
 
 			Players = [.. playersList];
-
+			
 			// play
 			Loop();
 		}
@@ -42,8 +42,10 @@ namespace Miniville
 		{
 			while (!Ended())
 			{
-				// get the playing player and the others
-				turns++;
+                DisplayPlayerInfo();
+
+                // get the playing player and the others
+                turns++;
 				CurrentTurnPlayerIndex = turns % Players.Length;
 				Player playingPlayer = Players[CurrentTurnPlayerIndex];
 				IEnumerable<Player> otherPlayers = Players.Where((val, idx) => idx != CurrentTurnPlayerIndex);
@@ -52,12 +54,12 @@ namespace Miniville
 				// logic to choose to play with 1 or 2 dices -> argument true for 2 dices
 				bool isDoubleDice;
 				if (Players[CurrentTurnPlayerIndex].Type == PlayerType.HUMAN)
-					isDoubleDice = HumanInterface.AskBool("Do you want to roll 2 dices?");
+					isDoubleDice = HumanInterface.AskBool("\nDo you want to roll 2 dices?");
 				else
 					isDoubleDice = BotInterface.AskBool();
                 
 				var diceResult = dice.Roll(isDoubleDice);
-				Console.WriteLine($"{playingPlayer} rolled a {diceResult.total} !");
+				Console.WriteLine($"\n{playingPlayer} rolled a {diceResult.total} !");
 
                 //Check if PlayingPlayer have Blue or Green Card & activate card
                 foreach (Card card in playingPlayer.Cards)
@@ -168,9 +170,10 @@ namespace Miniville
 
 			if (player.Type == PlayerType.HUMAN)
 			{
-				if (!HumanInterface.AskBool("It is shopping time! Would you like to buy a card?")) return;
+				if (!HumanInterface.AskBool("\nIt is shopping time! Would you like to buy a card?")) return;
+				Thread.Sleep(1000);
 				
-				Console.WriteLine($"{player.Name} can buy one of these: (enter number)");
+				Console.WriteLine($"\n{player.Name} can buy one of these: (enter number)");
 				int cardIndex = 0;
                 for (int i = 0; i < Shop.Count; i++)
                 {
@@ -179,8 +182,10 @@ namespace Miniville
                         cardIndex++;
 						var card = Shop[i].Loop()[0];
                         Console.WriteLine($"({cardIndex})  --  [{card.ActiveNumbers}] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
+                        Thread.Sleep(200);
                     }
                 }
+				Console.WriteLine();
 				int cardBoughtIndex = HumanInterface.AskIndex("", ++cardIndex);
 				player.BuyCard(Shop[--cardBoughtIndex].Pickup());
 			}
@@ -188,7 +193,7 @@ namespace Miniville
 			{
                 if (!BotInterface.AskBool()) return;
 
-                Console.WriteLine($"{player.Name} can buy one of these: (enter number)");
+                Console.WriteLine($"\n{player.Name} can buy one of these: (enter number)");
                 int cardIndex = 0;
                 for (int i = 0; i < Shop.Count; i++)
                 {
@@ -197,11 +202,23 @@ namespace Miniville
                         cardIndex++;
                         var card = Shop[i].Loop()[0];
                         Console.WriteLine($"({cardIndex})  --  [{card.ActiveNumbers}] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
+                        Thread.Sleep(200);
                     }
                 }
                 int cardBoughtIndex = BotInterface.AskIndex(++cardIndex);
                 player.BuyCard(Shop[--cardBoughtIndex].Pickup());
             }
 		}
+
+		private void DisplayPlayerInfo()
+		{
+            foreach (Player player in Players)
+            {
+                Console.WriteLine();
+                player.DisplayCards();
+				Console.WriteLine($"{player.Name} has {player.Money} coin(s)");
+				Thread.Sleep(1000);
+            }
+        }
 	}
 }
