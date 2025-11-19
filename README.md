@@ -6,15 +6,15 @@ How to play at Minivilles
 
 </header>
 
-##Run the project
+## Run the project
 
 1. Download the project
 2. Run Miniville.sln file with Visual Studio
 3. Click on the button with a green arrow and the "Miniville" text.
 
-###How to play in-game
+### How to play in-game
 
-####Rules of the game
+#### Rules of the game
 - Each player or AI starts with a Bakery and a Wheat Field.
 - Each turn, the current player rolls a die.
 - The result of the die activates cards of the same value.
