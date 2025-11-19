@@ -13,8 +13,9 @@ How to play at Minivilles
 3. Click on the button with a green arrow and the "Miniville" text.
 
 ### How to play in-game
-1. When it's your turn, you can chose to roll one or two dice, type "y" to accept to roll a second dice or "n" if you want to refuse
-2. After the roll, you can choose to buy or not a new card, type "y" to accept to buy a card or "n" if you want to refuse
+1. When it is your turn, you can choose to roll one or two dice. Type “y” to agree to roll a second die or “n” if you wish to decline.
+2. After rolling, you can choose whether or not to buy a new card. Type “y” to accept or “n” to decline.
+3. If you choose “y,” the store will appear and you can type the number of the card you wish to purchase.
 
 #### Rules of the game
 - Each player or AI starts with a Bakery and a Wheat Field.
