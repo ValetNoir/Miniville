@@ -89,7 +89,7 @@ namespace Miniville.BuildingStuff
 
                 int chosenPlayerIndex = -1;
 
-                if (owner.Type = PlayerType.HUMAN)
+                if (owner.Type == PlayerType.HUMAN)
                 {
                     string playerPrompt = $"Choose a player to steal {amount} coins from:\n";
                     for (int i = 0; i < players.Length; i++)
@@ -138,7 +138,7 @@ namespace Miniville.BuildingStuff
                 int targetBuildingIndex = -1;
                 int ownerBuildingIndex = -1;
 
-                if (owner.Type = PlayerType.HUMAN)
+                if (owner.Type == PlayerType.HUMAN)
                 {
                     bool wantsToTrade = HumanInterface.AskBool("Do you want to trade a building with another player ?");
                 

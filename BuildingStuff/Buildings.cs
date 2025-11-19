@@ -18,7 +18,7 @@ namespace Miniville.BuildingStuff
             "Wheat Field",
             "Get 1 coin from the bank. Everyone can use this card on anyone's turn.",
             1,
-            EffectsGenerator.Instance.GenerateMoney(1)
+            EffectsGenerator.GenerateMoney(1)
         );
 
         static public readonly Card FARM = new Card(
@@ -28,7 +28,7 @@ namespace Miniville.BuildingStuff
             "Farm",
             "Get 1 coin from the bank. Everyone can use this card on anyone's turn.",
             1,
-            EffectsGenerator.Instance.GenerateMoney(1)
+            EffectsGenerator.GenerateMoney(1)
         );
 
         static public readonly Card BAKERY = new Card(
@@ -38,7 +38,7 @@ namespace Miniville.BuildingStuff
             "Bakery",
             "Get 1 coin from the bank. Only on your turn.",
             1,
-            EffectsGenerator.Instance.GenerateMoney(1)
+            EffectsGenerator.GenerateMoney(1)
         );
 
         static public readonly Card CAFE = new Card(
@@ -48,7 +48,7 @@ namespace Miniville.BuildingStuff
             "Cafe",
             "Get 1 coin from the player who rolled the dice. Only on their turn.",
             2,
-            EffectsGenerator.Instance.StealMoneyFromCurrentPlayer(1)
+            EffectsGenerator.StealMoneyFromCurrentPlayer(1)
         );
 
         static public readonly Card CONVENIENCE_STORE = new Card(
@@ -58,7 +58,7 @@ namespace Miniville.BuildingStuff
             "Convenience Store",
             "Get 3 coins from the bank. Only on your turn.",
             2,
-            EffectsGenerator.Instance.GenerateMoney(3)
+            EffectsGenerator.GenerateMoney(3)
         );
 
         static public readonly Card FOREST = new Card(
@@ -68,7 +68,7 @@ namespace Miniville.BuildingStuff
             "Forest",
             "Get 1 coin from the bank. Everyone can use this card on anyone's turn.",
             3,
-            EffectsGenerator.Instance.GenerateMoney(1)
+            EffectsGenerator.GenerateMoney(1)
         );
 
         static public readonly Card STADIUM = new Card(
@@ -78,7 +78,7 @@ namespace Miniville.BuildingStuff
             "Stadium",
             "Get 2 coins from all players. Only on your turn.",
             6,
-            EffectsGenerator.Instance.StealMoneyFromAll(2)
+            EffectsGenerator.StealMoneyFromAll(2)
         );
 
         static public readonly Card BUSINESS_CENTER = new Card(
@@ -88,7 +88,7 @@ namespace Miniville.BuildingStuff
             "Business Center",
             "Trade one of your buildings with another player. Only on your turn.",
             8,
-            EffectsGenerator.Instance.TradeBuilding()
+            EffectsGenerator.TradeBuilding()
         );
 
         static public readonly Card TV_STATION = new Card(
@@ -98,7 +98,7 @@ namespace Miniville.BuildingStuff
             "TV Station",
             "Choose a player to give you 5 coins. Only on your turn.",
             7,
-            EffectsGenerator.Instance.StealMoneyFromChosen(5)
+            EffectsGenerator.StealMoneyFromChosen(5)
         );
 
         static public readonly Card CHEESE_FACTORY = new Card(
@@ -108,7 +108,7 @@ namespace Miniville.BuildingStuff
             "Cheese Factory",
             "Get 3 coins from the bank for each COW building you own. Only on your turn.",
             5,
-            EffectsGenerator.Instance.GenerateMoneyPerType(3, CardType.COW)
+            EffectsGenerator.GenerateMoneyPerType(3, CardType.COW)
         );
 
         static public readonly Card FURNITURE_FACTORY = new Card(
@@ -118,7 +118,7 @@ namespace Miniville.BuildingStuff
             "Furniture Factory",
             "Get 3 coins from the bank for each GEAR building you own. Only on your turn.",
             3,
-            EffectsGenerator.Instance.GenerateMoneyPerType(3, CardType.GEAR)
+            EffectsGenerator.GenerateMoneyPerType(3, CardType.GEAR)
         );
 
         static public readonly Card MINE = new Card(
@@ -128,7 +128,7 @@ namespace Miniville.BuildingStuff
             "Mine",
             "Get 5 coins from the bank. Everyone can use this card on anyone's turn.",
             6,
-            EffectsGenerator.Instance.GenerateMoney(5)
+            EffectsGenerator.GenerateMoney(5)
         );
 
         static public readonly Card RESTAURANT = new Card(
@@ -138,7 +138,7 @@ namespace Miniville.BuildingStuff
             "Restaurant",
             "Get 2 coins from the player who rolled the dice. Only on their turn.",
             3,
-            EffectsGenerator.Instance.StealMoneyFromCurrentPlayer(2)
+            EffectsGenerator.StealMoneyFromCurrentPlayer(2)
         );
 
         static public readonly Card ORCHARD = new Card(
@@ -148,7 +148,7 @@ namespace Miniville.BuildingStuff
             "Orchard",
             "Get 3 coins from the bank. Everyone can use this card on anyone's turn.",
             3,
-            EffectsGenerator.Instance.GenerateMoney(3)
+            EffectsGenerator.GenerateMoney(3)
         );
 
         static public readonly Card FRUIT_AND_VEGETABLE_MARKET = new Card(
@@ -158,7 +158,7 @@ namespace Miniville.BuildingStuff
             "Fruit and Vegetable Market",
             "Get 2 coins from the bank for each WHEAT building you own. Only on your turn.",
             2,
-            EffectsGenerator.Instance.GenerateMoneyPerType(2, CardType.WHEAT)
+            EffectsGenerator.GenerateMoneyPerType(2, CardType.WHEAT)
         );
     }
 }
