@@ -25,7 +25,11 @@ namespace Miniville.BuildingStuff
             Name = name;
             Desc = desc;
             Price = price;
-            Effect = effect;
+            Effect = (players, ownerIndex, currentPlayerIndex) =>
+            {
+                Console.Write($"Activating {Name} for Player {ownerIndex} ({players[ownerIndex].Name}) : ");
+                effect(players, ownerIndex, currentPlayerIndex);
+            };
         }
     }
 }
