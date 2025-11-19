@@ -3,100 +3,139 @@ skinparam classAttributeIconSize 0
 
 enum CardColor
 {
-    BLUE
-    GREEN
-    RED
-    PURPLE
-    YELLOW
+  BLUE
+  GREEN
+  RED
+  PURPLE
+  YELLOW
 }
 
 enum CardType
 {
-    WHEAT
-    COW
-    SHOP
-    CUP
-    GEAR
-    TOWER
-    FACTORY
-    BOMB
+  WHEAT
+  COW
+  SHOP
+  CUP
+  GEAR
+  TOWER
+  FACTORY
+  BOMB
 }
 
 enum PlayerType
 {
-    HUMAN
-    BOT
+  HUMAN
+  BOT
 }
 
 class Card {
-    + ActiveNumbers {readonly} : int[]
-    + CardColor {readonly} : Color;
-    + CardType {readonly} : Type;
-    + Name {readonly} : string
-    + Desc {readonly} : string
-    + Price {readonly} : int
-    + Effect {readonly} : Action<Player[], int, int>
-        
-    + Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, Action<Player[], int, int> effect)
+  + ActiveNumbers {readonly} : int[]
+  + CardColor {readonly} : Color;
+  + CardType {readonly} : Type;
+  + Name {readonly} : string
+  + Desc {readonly} : string
+  + Price {readonly} : int
+  + Effect {readonly} : Action<Player[], int, int>
+      
+  + Card(int[] activeNumbers, CardColor color, CardType type, string name, string desc, int price, Action<Player[], int, int> effect)
 }
 
 static class Buildings {
-    + WHEAT_FIELD {readonly} : Card
-    + FARM {readonly} : Card
-    + BAKERY {readonly} : Card
-    + CAFE {readonly} : Card
-    + CONVENIENCE_STORE {readonly} : Card
-    + FOREST {readonly} : Card
-    + STADIUM {readonly} : Card
-    + BUSINESS_CENTER {readonly} : Card
-    + TV_STATION {readonly} : Card
-    + CHEESE_FACTORY {readonly} : Card
-    + FURNITURE_FACTORY {readonly} : Card
-    + MINE {readonly} : Card
-    + RESTAURANT {readonly} : Card
-    + ORCHARD {readonly} : Card
-    + FRUIT_AND_VEGETABLE_MARKET {readonly} : Card
+  + WHEAT_FIELD {readonly} : Card
+  + FARM {readonly} : Card
+  + BAKERY {readonly} : Card
+  + CAFE {readonly} : Card
+  + CONVENIENCE_STORE {readonly} : Card
+  + FOREST {readonly} : Card
+  + STADIUM {readonly} : Card
+  + BUSINESS_CENTER {readonly} : Card
+  + TV_STATION {readonly} : Card
+  + CHEESE_FACTORY {readonly} : Card
+  + FURNITURE_FACTORY {readonly} : Card
+  + MINE {readonly} : Card
+  + RESTAURANT {readonly} : Card
+  + ORCHARD {readonly} : Card
+  + FRUIT_AND_VEGETABLE_MARKET {readonly} : Card
 }
 
 static class EffectsGenerator {
-    + GenerateMoney(amount: int) {static} : Action<Player[], int, int>
-    + GenerateMoneyPerType(amount: int, type: CardType) {static} : Action<Player[], int, int>
-    + StealMoneyFromCurrentPlayer(amount: int) {static} : Action<Player[], int, int>
-    + StealMoneyFromAll(amount: int) {static} : Action<Player[], int, int>
-    + StealMoneyFromChosen(amount: int) {static} : Action<Player[], int, int>
-    + TradeBuilding() {static} : Action<Player[], int, int>
+  + GenerateMoney(amount: int) {static} : Action<Player[], int, int>
+  + GenerateMoneyPerType(amount: int, type: CardType) {static} : Action<Player[], int, int>
+  + StealMoneyFromCurrentPlayer(amount: int) {static} : Action<Player[], int, int>
+  + StealMoneyFromAll(amount: int) {static} : Action<Player[], int, int>
+  + StealMoneyFromChosen(amount: int) {static} : Action<Player[], int, int>
+  + TradeBuilding() {static} : Action<Player[], int, int>
 }
 
 static class BotInterface {
-    + AskIndex(arrayLength: int, excludeIndex: int) {static} : int
-    + AskBool() {static} : bool
+  + AskIndex(arrayLength: int, excludeIndex: int) {static} : int
+  + AskBool() {static} : bool
 }
 
 static class HumanInterface {
-    + AskIndex(text: string, arrayLength: int, excludeIndex: int) {static} : int
-    + AskBool(prompt: string) {static} : bool
+  + AskIndex(text: string, arrayLength: int, excludeIndex: int) {static} : int
+  + AskBool(prompt: string) {static} : bool
 }
 
 class Dice {
-    - rdm : Random
-    + Roll() : (int[] faces, int total)
+  - rdm : Random
+  + Roll() : (int[] faces, int total)
 }
 
 class Game {
-    + Players : Player[]
-    + CurrentPlayerIndex: int
-    + Shop : List<Pile>
-    - dice : Dice
-    - turns : int
-    + Game(humanAmount = 1: int, botAmount = 1: int)
-    + Loop() : void
-    + GetWinnerIndex() : int?
-    + Ended() : bool
-    - InitShop() : void
-    - CardShop() : void
+  + Players : Player[]
+  + CurrentPlayerIndex: int
+  + Shop : List<Pile>
+  - dice : Dice
+  - turns : int
+  + Game(humanAmount: int = 1, botAmount: int = 1)
+  + Loop() : void
+  + GetWinnerIndex() : int?
+  + Ended() : bool
+  - InitShop() : void
+  - CardShop() : void
 }
 
 class Pile {
-    + Cards : List<Card>
-    + Pile(card: Card)
+  + Cards : List<Card>
+  + Pile(newCardReference: Card)
+  + Stack(newCardReference: Card) : void
+  + IsEmpty() : bool
+  + Top() : Card
+  + Pickup() : Card
+  + Loop() : List<string>
 }
+
+class Player {
+  + Cards : List<Card>
+  + Money : int
+  + Name {readonly} : string
+  + Type {readonly} : PlayerType
+  + Player(playerType: PlayerType = PlayerType.HUMAN, name: string = "machin")
+  + BuyCard(building: Card) : void
+  + HasBuilding(building: Card) : bool
+  + HasWon() : bool
+  + ToString() : string
+}
+
+class Program {
+  + Main(args: string[]) : void
+}
+
+CardColor --* Card
+CardType --* Card
+BotInterface ..> Game
+HumanInterface ..> Game
+BotInterface ..> EffectsGenerator
+HumanInterface ..> EffectsGenerator
+EffectsGenerator ..> Buildings
+PlayerType --* Player
+Game --* Program
+Dice --* Game
+Player "2.." --* "1" Game
+Pile "15" --* "1" Game
+Card "0..6" --o "1" Pile
+Card "0.." --o "1" Player
+Card --* Buildings
+Buildings ..> Game
+@enduml
