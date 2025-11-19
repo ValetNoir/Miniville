@@ -144,22 +144,20 @@ namespace Miniville
 		private void InitShop()
 		{
 			Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-			Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-
-
+			Shop.Add(new Pile().InitStack(Buildings.RESTAURANT));
+            Shop.Add(new Pile().InitStack(Buildings.CAFE));
+            Shop.Add(new Pile().InitStack(Buildings.FARM));
+            Shop.Add(new Pile().InitStack(Buildings.STADIUM));
+            Shop.Add(new Pile().InitStack(Buildings.BAKERY));
+            Shop.Add(new Pile().InitStack(Buildings.BUSINESS_CENTER));
+            Shop.Add(new Pile().InitStack(Buildings.CHEESE_FACTORY));
+            Shop.Add(new Pile().InitStack(Buildings.CONVENIENCE_STORE));
+            Shop.Add(new Pile().InitStack(Buildings.FOREST));
+            Shop.Add(new Pile().InitStack(Buildings.MINE));
+            Shop.Add(new Pile().InitStack(Buildings.FRUIT_AND_VEGETABLE_MARKET));
+            Shop.Add(new Pile().InitStack(Buildings.FURNITURE_FACTORY));
+            Shop.Add(new Pile().InitStack(Buildings.ORCHARD));
+            Shop.Add(new Pile().InitStack(Buildings.TV_STATION));
         }
 
 		private void CardShop()
@@ -172,15 +170,17 @@ namespace Miniville
 				
 				Console.WriteLine("you can buy one of these: (enter number)");
 				int cardIndex = 0;
-				foreach (var card in BuildingsAmountLeft)
-				{
-					if(card.Value > 0)
+                for (int i = 0; i < Shop.Count; i++)
+                {
+					if(!Shop[i].IsEmpty())
 					{
-						cardIndex++;
-                        Console.WriteLine($"({cardIndex})  --  [{card.Key.ActiveNumbers}] {card.Key.Color} - {card.Key.Name} : {card.Key.Desc} - {card.Key.Price}$");
+                        cardIndex++;
+						var card = Shop[i].Loop()[0];
+                        Console.WriteLine($"({cardIndex})  --  [{card.ActiveNumbers}] {card.Color} - {card.Name} : {card.Desc} - {card.Price}$");
                     }
-				}
-				Card chosenCard = HumanInterface.AskIndex("", ++cardIndex);
+                }
+				int cardBoughtIndex = HumanInterface.AskIndex("", ++cardIndex);
+				player.BuyCard(Shop[cardBoughtIndex].Pickup());
 			}
 			else
 			{
