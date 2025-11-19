@@ -8,7 +8,7 @@ namespace Miniville
 	{
 		public Player[] Players = [];
 		public int CurrentTurnPlayerIndex;
-		public List<Pile> Shop;
+		public List<Pile> Shop = new();
 		private Dice dice = new();
 		private int turns = 0;
 
@@ -30,6 +30,8 @@ namespace Miniville
 			}
 
 			Players = [.. playersList];
+
+			InitShop();
 
 			// play
 			Loop();
@@ -142,24 +144,23 @@ namespace Miniville
 
 		private void InitShop()
 		{
+			Shop = [];
 			Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-			Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-            Shop.Add(new Pile().InitStack(Buildings.WHEAT_FIELD));
-
-
-        }
+			Shop.Add(new Pile().InitStack(Buildings.FARM));
+			Shop.Add(new Pile().InitStack(Buildings.BAKERY));
+			Shop.Add(new Pile().InitStack(Buildings.CAFE));
+			Shop.Add(new Pile().InitStack(Buildings.CONVENIENCE_STORE));
+			Shop.Add(new Pile().InitStack(Buildings.FOREST));
+			Shop.Add(new Pile().InitStack(Buildings.STADIUM));
+			Shop.Add(new Pile().InitStack(Buildings.BUSINESS_CENTER));
+			Shop.Add(new Pile().InitStack(Buildings.TV_STATION));
+			Shop.Add(new Pile().InitStack(Buildings.CHEESE_FACTORY));
+			Shop.Add(new Pile().InitStack(Buildings.FURNITURE_FACTORY));
+			Shop.Add(new Pile().InitStack(Buildings.MINE));
+			Shop.Add(new Pile().InitStack(Buildings.RESTAURANT));
+			Shop.Add(new Pile().InitStack(Buildings.ORCHARD));
+			Shop.Add(new Pile().InitStack(Buildings.FRUIT_AND_VEGETABLE_MARKET));
+    }
 
 		private void CardShop()
 		{
@@ -168,22 +169,40 @@ namespace Miniville
 			if (player.Type == PlayerType.HUMAN)
 			{
 				if (!HumanInterface.AskBool("It is shopping time! Would you like to buy a card?")) return;
-				
+
 				Console.WriteLine("you can buy one of these: (enter number)");
-				int cardIndex = 0;
-				foreach (var card in BuildingsAmountLeft)
+				for (int i = 0; i < Shop.Count; i++)
 				{
-					if(card.Value > 0)
+					Pile pile = Shop[i];
+					if(pile.IsEmpty())
 					{
-						cardIndex++;
-                        Console.WriteLine($"({cardIndex})  --  [{card.Key.ActiveNumbers}] {card.Key.Color} - {card.Key.Name} : {card.Key.Desc} - {card.Key.Price}$");
-                    }
+	          Console.WriteLine($"({i})  --  [{pile.Cards.Count()}] {pile.Top().Color} - {pile.Top().Name} : {pile.Top().Desc} - {pile.Top().Price}$");
+	        } else
+					{
+	          Console.WriteLine($"({i})  --  [0] EMPTY");
+					}
 				}
-				Card chosenCard = HumanInterface.AskIndex("", ++cardIndex);
+				
+				int pileIndex = HumanInterface.AskIndex("", Shop.Count + 1) - 1;
+				Pile chosenPile = Shop[pileIndex];
+				if (chosenPile.IsEmpty())
+				{
+					Console.WriteLine("you tried to shop an empty pile ._.");
+					return;
+				}
+				player.BuyCard(chosenPile.Pickup());
 			}
 			else
 			{
-
+				int pileIndex = new Random().Next(0,Shop.Count);
+				Console.WriteLine($"the bot is shoping the card {pileIndex}");
+				Pile chosenPile = Shop[pileIndex];
+				if (chosenPile.IsEmpty())
+				{
+					Console.WriteLine("the bot tried to shop an empty pile ._.");
+					return;
+				}
+				player.BuyCard(chosenPile.Pickup());
 			}
 		}
 	}
